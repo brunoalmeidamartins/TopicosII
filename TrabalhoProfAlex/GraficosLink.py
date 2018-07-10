@@ -21,6 +21,9 @@ rect.set_facecolor('#31312e')
 
 ax1 = fig.add_subplot(1,1,1, axisbg='grey')
 
+tx311_aux = tx314_aux = tx312_aux = tx211_aux = tx214_aux = tx114_aux = 0 #Guarda Valores Anteriores
+rx311_aux = rx314_aux = rx312_aux = rx211_aux = rx214_aux = rx114_aux = 0 #Guarda Valores Anteriores
+
 
 while i <tempo:
     #S3 {1,6,2}
@@ -45,22 +48,25 @@ while i <tempo:
     rx114=int(commands.getoutput("ovs-ofctl dump-ports s1 14 | grep rx | awk -F= '{print $2}' | awk -F, '{print $1}'"))
 
     x.append(i)
-    y1.append(tx311+rx311)
-    y2.append(tx314+rx314)
-    y3.append(tx214+rx214)
-    y4.append(tx211+rx211)
-    y5.append(tx114+rx114)
-    y6.append(tx312+rx312)
+    y1.append((tx311-tx311_aux)+(rx311-rx311_aux))
+    print((tx311-tx311_aux)+(rx311-rx311_aux))
+
+    y2.append((tx314-tx314_aux)+(rx314-rx314_aux))
+    y3.append((tx214-tx214_aux)+(rx214-rx214_aux))
+    y4.append((tx211-tx211_aux)+(rx211-rx211_aux))
+    y5.append((tx114-tx114_aux)+(rx114-rx114_aux))
+    y6.append((tx312-tx312_aux)+(rx312-rx312_aux))
+
 
     ax1.plot(x,y1,'c',linewidth=3.3,linestyle='-', label='Link1')
     ax1.plot(x,y2,'red',linewidth=3.3,linestyle='-', label='Link2')
     ax1.plot(x,y3,'green',linewidth=3.3,linestyle='-', label='Link3')
     ax1.plot(x,y4,'blue',linewidth=3.3,linestyle='-', label='Link4')
     ax1.plot(x,y5,'yellow',linewidth=3.3,linestyle='-', label='Link5')
-    ax1.plot(x,y6,'gray',linewidth=3.3,linestyle='-', label='Link6')
+    ax1.plot(x,y6,'orange',linewidth=3.3,linestyle='-', label='Link6')
     #ax1.plot(x1,y1,'r',linewidth=2.5,linestyle='--', label='Teste2')
     if i == 0:
-        ax1.legend(loc='lower right') #"upper left" Esqueda Cima
+        ax1.legend(loc='upper right') #"upper left" Esqueda Cima
 
     ax1.tick_params(axis='x', colors='c')
     ax1.tick_params(axis='y', colors='c')
@@ -79,3 +85,25 @@ while i <tempo:
     plt.pause(0.0001)
     i+=1
     time.sleep(1)
+
+    tx311_aux = tx311
+    tx314_aux = tx314
+    tx312_aux = tx312
+    tx211_aux = tx211
+    tx214_aux = tx214
+    tx114_aux = tx114
+
+    rx311_aux = rx311
+    rx314_aux = rx314
+    rx312_aux = rx312
+    rx211_aux = rx211
+    rx214_aux = rx214
+    rx114_aux = rx114
+
+    #Debug
+    #print((tx311-tx311_aux)+(rx311-rx311_aux))
+    #print((tx314-tx314_aux)+(rx314-rx314_aux))
+    #print((tx214-tx214_aux)+(rx214-rx214_aux))
+    #print((tx211-tx211_aux)+(rx211-rx211_aux))
+    #print((tx114-tx114_aux)+(rx114-rx114_aux))
+    #print((tx312-tx312_aux)+(rx312-rx312_aux))
