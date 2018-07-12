@@ -37,12 +37,14 @@ def myNetwork():
     s4 = net.addSwitch('s4', cls=OVSKernelSwitch)
 
     info( '*** Add hosts\n')
-    h1 = net.addHost('h1', cls=Host, ip='10.0.0.1', mac='00:00:00:00:00:01', defaultRoute=None)
-    h2 = net.addHost('h2', cls=Host, ip='10.0.0.2', mac='00:00:00:00:00:02', defaultRoute=None)
-    h3 = net.addHost('h3', cls=Host, ip='10.0.0.3', mac='00:00:00:00:00:03', defaultRoute=None)
-    h4 = net.addHost('h4', cls=Host, ip='10.0.0.4', mac='00:00:00:00:00:04', defaultRoute=None)
-    srv1 = net.addHost('srv1', cls=Host, ip='10.0.0.11', mac='00:00:00:00:00:11', defaultRoute=None)
-    srv2 = net.addHost('srv2', cls=Host, ip='10.0.0.12', mac='00:00:00:00:00:12', defaultRoute=None)
+    h1 = net.addHost('h1', cls=Host, ip='10.0.0.1', mac='00:00:00:00:01:01', defaultRoute=None)
+    h2 = net.addHost('h2', cls=Host, ip='10.0.0.2', mac='00:00:00:00:01:02', defaultRoute=None)
+    h3 = net.addHost('h3', cls=Host, ip='10.0.0.3', mac='00:00:00:00:02:03', defaultRoute=None)
+    h4 = net.addHost('h4', cls=Host, ip='10.0.0.4', mac='00:00:00:00:02:04', defaultRoute=None)
+    h5 = net.addHost('h5', cls=Host, ip='10.0.0.5', mac='00:00:00:00:04:05', defaultRoute=None)
+    h6 = net.addHost('h6', cls=Host, ip='10.0.0.6', mac='00:00:00:00:04:06', defaultRoute=None)
+    srv1 = net.addHost('srv1', cls=Host, ip='10.0.0.11', mac='00:00:00:00:03:11', defaultRoute=None)
+    srv2 = net.addHost('srv2', cls=Host, ip='10.0.0.12', mac='00:00:00:00:03:12', defaultRoute=None)
 
     info( '*** Add links\n')
     linkopts = dict(bw=1000,delay='5ms',loss=0,max_queue_size=10000,use_htb=True)
@@ -50,6 +52,8 @@ def myNetwork():
     net.addLink(h2, s1, 1, 2, **linkopts)
     net.addLink(h3, s2, 1, 1, **linkopts)
     net.addLink(h4, s2, 1, 2, **linkopts)
+    net.addLink(h5, s4, 1, 1, **linkopts)
+    net.addLink(h6, s4, 1, 2, **linkopts)
     net.addLink(srv1, s3, 1, 1, **linkopts)
     net.addLink(srv2, s3, 1, 2, **linkopts)
     net.addLink(s1, s3, 13, 11, **linkopts)
@@ -57,8 +61,8 @@ def myNetwork():
     net.addLink(s2, s3, 13, 12, **linkopts)
     net.addLink(s2, s4, 14, 12, **linkopts)
     net.addLink(s3, s4, 14, 13, **linkopts)
-
     net.addLink(s1, s2, 12, 11, **linkopts) #Adicionando o link que falta na topologia
+
 
     info( '\n*** Starting network\n')
     net.build()
