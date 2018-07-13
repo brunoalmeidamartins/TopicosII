@@ -48,7 +48,7 @@ def executaComandosOVS(comando):
 Define regras de saida dos hosts nos switchs
 '''
 
-'''
+
 listaConexoes = []
 
 for i in conexoes:
@@ -56,13 +56,13 @@ for i in conexoes:
 for i in listaConexoes:
     comando = 'ovs-ofctl add-flow ' + conexoes[i][0] + ' dl_dst=' + host[i] + ',actions=output:' +str(conexoes[i][1])
     executaComandosOVS(comando)
-'''
+
 
 '''
 Define as outras regras de saida
 '''
 
-'''
+
 listaSwitches = []
 listaHosts = []
 for i in switch:
@@ -95,8 +95,8 @@ for i in listaSwitches:
                     executaComandosOVS(comando)
 
 
-'''
 
+'''
 listaConexoes = []
 
 for i in conexoes:
@@ -135,3 +135,4 @@ for i in listaSwitches:
                 else:
                     comando = 'ovs-ofctl add-flow ' + i + ' dl_dst='+ host[j]+',nw_proto=1'+',actions=output:14'
                     executaComandosOVS(comando)
+'''
